@@ -33,47 +33,13 @@
           <!-- Search -->
           <div class="widget">
             <h5 class="widget-title"><span>Search</span></h5>
-            <form action="/logbook-hugo/search" class="widget-search">
-              <input id="search-query" name="s" type="search" placeholder="Type &amp; Hit Enter..." />
+            <form action="{% url 'home' %}" method="get" class="widget-search">
+              <input id="search-query" name="q" type="search" placeholder="Type &amp; Hit Enter..." />
               <button type="submit"><i class="ti-search"></i></button>
             </form>
           </div>
           <!-- categories -->
-          <div class="widget">
-            <h5 class="widget-title"><span>Categories</span></h5>
-            <ul class="list-unstyled widget-list">
-              <li>
-                <a href="#!" class="d-flex">
-                  Four seasone
-                  <small class="ml-auto">(1)</small>
-                </a>
-              </li>
-              <li>
-                <a href="#!" class="d-flex">
-                  Newyork city
-                  <small class="ml-auto">(2)</small>
-                </a>
-              </li>
-              <li>
-                <a href="#!" class="d-flex">
-                  Photobooth
-                  <small class="ml-auto">(1)</small>
-                </a>
-              </li>
-              <li>
-                <a href="#!" class="d-flex">
-                  Photography
-                  <small class="ml-auto">(2)</small>
-                </a>
-              </li>
-              <li>
-                <a href="#!" class="d-flex">
-                  Videography
-                  <small class="ml-auto">(1)</small>
-                </a>
-              </li>
-            </ul>
-          </div>
+          {% include 'post/category.html' %}
           <!-- tags -->
 
           <!-- latest post -->

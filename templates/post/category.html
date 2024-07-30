@@ -1,0 +1,14 @@
+<div class="widget">
+  <h5 class="widget-title"><span>Categories</span></h5>
+  <ul class="list-unstyled widget-list">
+    {% for cate in category %}
+
+    <li>
+      <a href="{% url 'home' %}?q={{ cate.name }}" class="d-flex">
+        {{cate.name}}
+        <small class="ml-auto">({{ cate.post_set.all.count }})</small>
+      </a>
+    </li>
+    {% endfor %}
+  </ul>
+</div>
