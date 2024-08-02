@@ -9,12 +9,14 @@ class PostForm(ModelForm):
         fields = [
             "title",
             "content",
+            "post_image",
             "category",
         ]
         widgets = {
             "title": forms.TextInput(attrs={"class": "form-control", "required": True}),
             "content": forms.Textarea(attrs={"class": "form-control"}),
-            "category": forms.Select(attrs={"class": "form-control"}),
+            "category": forms.SelectMultiple(attrs={"class": "form-control"}),
+            "post_image": forms.FileInput(attrs={"class": "form-control"}),
         }
 
     def __init__(self, *args, **kwargs):

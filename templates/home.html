@@ -24,7 +24,7 @@
                     Categories : <a href="#!" class="ml-1">{{ post.category.name }}</a>
                   </li>
                 </ul>
-                <p>{{ post.content }}</p> <a href="{% url 'post' post.id %}" class="btn btn-outline-primary">Continue Reading</a>
+                <p>{{ post.content|truncatewords:30 }}</p> <a href="{% url 'post' post.id %}" class="btn btn-outline-primary">Continue Reading</a>
               </div>
             </article>
           {% endfor %}

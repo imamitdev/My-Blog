@@ -22,9 +22,7 @@ def home(request):
 def home(request):
     q = request.GET.get("q") if request.GET.get("q") != None else ""
     posts = Post.objects.filter(
-        Q(category__name__icontains=q)
-        | Q(title__icontains=q)
-        | Q(content__icontains=q)
+        Q(category__name__icontains=q) | Q(title__icontains=q) | Q(content__icontains=q)
     )
     category = Category.objects.all()[0:5]
 
@@ -42,12 +40,14 @@ def post_detail(request, id):
 
 def createPost(request):
     if request.method == "POST":
-        form = PostForm(request.POST)
+        form = PostForm(request.POST, request.FILES)
+        print(form)
         if form.is_valid():
             post = form.save(commit=False)
             post.author = request.user
             post.save()
-            form.save_m2m()  # Save the many-to-many data for the form
+            form.save_m2m()  # Save many-to-many relationships
+
             return redirect("home")  # Redirect to the desired URL after saving
     else:
         form = PostForm()
