@@ -15,6 +15,10 @@ class Post(models.Model):
     title = models.CharField(max_length=500)
     content = models.TextField()
     published_date = models.DateTimeField(auto_now=True, blank=True)
+    post_image = models.ImageField(
+        null=True, default="post-2.jpg", upload_to="postImage"
+    )
+
     author = models.ForeignKey(User, on_delete=models.CASCADE)
     category = models.ManyToManyField(Category)
     created_at = models.DateTimeField(auto_now_add=True)
