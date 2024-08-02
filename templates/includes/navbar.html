@@ -25,12 +25,16 @@
           <li class="nav-item">
             <a class="nav-link" href="{% url 'home' %}">Home</a>
           </li>
+          {%if user.id is None %}
+
           <li class="nav-item">
-            <a class="nav-link" href="">login</a>
+            <a class="nav-link" href="{% url 'login' %}">Login</a>
           </li>
+          {%else%}
           <li class="nav-item">
-            <a class="nav-link" href="">Register</a>
+            <a class="nav-link" href="{% url 'logout' %}">Logout</a>
           </li>
+          {%endif%}
         </ul>
 
         <!-- search -->
