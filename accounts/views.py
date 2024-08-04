@@ -1,10 +1,11 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import login, authenticate
-from .forms import RegistrationFrom
+from .forms import RegistrationFrom, UserProfileForm, UserForm
 from django.contrib import auth, messages
 from django.contrib.auth.decorators import login_required
 
 from .models import User, UserProfile
+from blog.models import Post, Category
 
 # Create your views here.
 
@@ -60,5 +61,43 @@ def user_logout(request):
     return redirect("login")
 
 
+@login_required(login_url="login")
 def user_profile(request):
-    return render(request, "user_profile.html")
+    user_profile = get_object_or_404(UserProfile, user=request.user)
+    posts = Post.objects.filter(author=request.user)
+
+    context = {
+        "user_profile": user_profile,
+        "posts": posts,
+    }
+    return render(request, "user_profile.html", context)
+
+
+@login_required
+def edit_profile(request):
+    user_profile = UserProfile.objects.get(user=request.user)
+    if request.method == "POST":
+        # Handle the profile update
+        profile_form = UserProfileForm(
+            request.POST, request.FILES, instance=user_profile
+        )
+        # Handle the user update
+        user_form = UserForm(request.POST, instance=request.user)
+
+        if profile_form.is_valid() and user_form.is_valid():
+            profile_form.save()
+            user_form.save()
+            return redirect("profile")
+    else:
+        profile_form = UserProfileForm(instance=user_profile)
+        user_form = UserForm(instance=request.user)
+
+    return render(
+        request,
+        "profile-edit.html",
+        {
+            "profile_form": profile_form,
+            "user_form": user_form,
+            "user_profile": user_profile,
+        },
+    )

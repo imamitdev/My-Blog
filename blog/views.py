@@ -68,6 +68,7 @@ def post_edit(request, slug):
     if request.method == "POST":
         form = PostForm(request.POST, instance=post)
         if form.is_valid():
+
             form.save()
 
             return redirect("post_list")

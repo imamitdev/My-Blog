@@ -1,12 +1,12 @@
 {% extends 'base.html' %}
-
+{% load static %}
 {% block content %}
   <section class="section-sm border-bottom">
     <div class="container">
       <div class="row">
         <div class="col-12">
           <div class="title-bordered mb-5 d-flex align-items-center">
-            <h1 class="h4">Jane Doe</h1>
+            <h1 class="h4">{{ user_profile.user.name }}</h1>
             <ul class="list-inline social-icons ml-auto mr-3 d-none d-sm-block">
               <li class="list-inline-item">
                 <a href="#"><i class="ti-facebook"></i></a>
@@ -18,49 +18,50 @@
                 <a href="#"><i class="ti-github"></i></a>
               </li>
             </ul>
+            <a href="{% url 'profile-edit' %}" class="btn btn-primary ml-auto">Edit Profile</a>
           </div>
         </div>
         <div class="col-lg-3 col-md-4 mb-4 mb-md-0 text-center text-md-left">
-          <img loading="lazy" class="rounded-lg img-fluid" src="images/jane-doe.jpg" alt="Jane Doe" />
+          <img loading="lazy" class="rounded-lg img-fluid" src="{{ user_profile.avatar.url }}" alt="{{ user_profile.user.name }}" />
         </div>
         <div class="col-lg-9 col-md-8 content text-center text-md-left">
-          <p>Jane Doe is an accomplished writer with a passion for storytelling and a love for exploring new cultures. Her work delves into the nuances of human experience, capturing emotions with vivid imagery and thought-provoking narratives.</p>
-          <p>When she’s not writing, Jane enjoys traveling, photography, and spending time with her family. She believes that every story has a lesson, and she’s dedicated to sharing those lessons with her readers.</p>
+          <p>{{ user_profile.bio }}</p>
         </div>
       </div>
     </div>
   </section>
-
   <section class="section-sm">
     <div class="container">
       <div class="row">
         <div class="col-lg-12">
           <div class="title text-center">
-            <h2 class="mb-5">Posts by Jane Doe</h2>
+            <h2 class="mb-5">Posts by {{ user_profile.user.name }}</h2>
           </div>
         </div>
-        <div class="col-lg-4 col-sm-6 mb-4">
-          <article class="mb-5">
-            <div class="post-slider slider-sm">
-              <img loading="lazy" src="images/post/post-6.jpg" class="img-fluid" alt="post-thumb" />
-            </div>
-            <h3 class="h5"><a class="post-title" href="post-details-1.html">Exploring New Horizons: A Journey Through Asia</a></h3>
-            <ul class="list-inline post-meta mb-2">
-              <li class="list-inline-item">
-                <i class="ti-user mr-2"></i><a href="author.html">Jane Doe</a>
-              </li>
-              <li class="list-inline-item">Date: July 12, 2024</li>
-              <li class="list-inline-item">
-                Categories: <a href="#!" class="ml-1">Travel</a>
-              </li>
-              <li class="list-inline-item">
-                Tags: <a href="#!" class="ml-1">Asia</a>, <a href="#!" class="ml-1">Travel</a>
-              </li>
-            </ul>
-            <p>A captivating journey through the vibrant cultures and landscapes of Asia...</p>
-            <a href="post-details-1.html" class="btn btn-outline-primary">Continue Reading</a>
-          </article>
-        </div>
+        {% for post in posts %}
+          <div class="col-lg-4 col-sm-6 mb-4">
+            <article class="mb-5">
+              <div class="post-slider slider-sm">
+                <img loading="lazy" src="{{ post.post_image.url }}" class="img-fluid" alt="post-thumb" />
+              </div>
+              <h3 class="h5"><a class="post-title" href="{% url 'post' post.slug %}">{{ post.title }}</a></h3>
+              <ul class="list-inline post-meta mb-2">
+                <li class="list-inline-item">
+                  <i class="ti-user mr-2"></i><a href="{% url 'profile' %}">{{ post.author.name }}</a>
+                </li>
+                <li class="list-inline-item">Date: {{ post.created_at }}</li>
+                <li class="list-inline-item">
+                  Categories:{% for category in post.category.all %}
+                    <a href="#!" class="ml-1">{{ category.name }}</a>
+                    {% if not forloop.last %},{% endif %}
+                  {% endfor %}
+                </li>
+              </ul>
+              <p>{{ post.content|truncatewords:20 }}</p>
+              <a href="{% url 'post' post.slug %}" class="btn btn-outline-primary">Continue Reading</a>
+            </article>
+          </div>
+        {% endfor %}
         <!-- Add more posts as needed -->
       </div>
     </div>
