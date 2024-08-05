@@ -17,7 +17,7 @@
                 <h3><a class="post-title" href="{% url 'post' post.slug %}">{{ post.title }}</a></h3>
                 <ul class="list-inline post-meta mb-4">
                   <li class="list-inline-item">
-                    <i class="ti-user mr-2"></i><a href="{% url 'profile' %}">{{ post.author.name }}</a>
+                    <i class="ti-user mr-2"></i><a href="{% url 'profile' post.author.username %}">{{ post.author.name }}</a>
                   </li>
                   <li class="list-inline-item">Date : {{ post.created_at }}</li>
                   <li class="list-inline-item">

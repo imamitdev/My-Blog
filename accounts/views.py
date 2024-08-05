@@ -62,9 +62,10 @@ def user_logout(request):
 
 
 @login_required(login_url="login")
-def user_profile(request):
-    user_profile = get_object_or_404(UserProfile, user=request.user)
-    posts = Post.objects.filter(author=request.user)
+def user_profile(request, username):
+    user = User.objects.get(username=username)
+    user_profile = get_object_or_404(UserProfile, user=user)
+    posts = Post.objects.filter(author=user)
 
     context = {
         "user_profile": user_profile,
