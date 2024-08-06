@@ -26,10 +26,12 @@ def home(request):
         Q(category__name__icontains=q) | Q(title__icontains=q) | Q(content__icontains=q)
     )
     category = Category.objects.all()[0:5]
+    latest_post = Post.objects.all()[0:5]
 
     context = {
         "posts": posts,
         "category": category,
+        "latest_post": latest_post,
     }
     return render(request, "home.html", context)
 

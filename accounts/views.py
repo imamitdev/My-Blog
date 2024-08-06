@@ -61,7 +61,6 @@ def user_logout(request):
     return redirect("login")
 
 
-@login_required(login_url="login")
 def user_profile(request, username):
     user = User.objects.get(username=username)
     user_profile = get_object_or_404(UserProfile, user=user)
