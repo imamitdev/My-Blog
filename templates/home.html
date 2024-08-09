@@ -26,7 +26,7 @@
                     {% endfor %}
                   </li>
                 </ul>
-                <p>{{ post.content|truncatewords:30 }}</p> <a href="{% url 'post' post.slug %}" class="btn btn-outline-primary">Continue Reading</a>
+                <p>{{ post.content|safe|truncatewords:30 }}</p> <a href="{% url 'post' post.slug %}" class="btn btn-outline-primary">Continue Reading</a>
               </div>
             </article>
           {% endfor %}

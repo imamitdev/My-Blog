@@ -7,7 +7,7 @@
           <div class="card-body">
             <h4 class="mb-4 text-center">Create Blog Post</h4>
             <form method="POST" enctype="multipart/form-data">
-              {% csrf_token %} {{ form.as_p }}
+              {% csrf_token %} {{ form.media }} {{ form.as_p }}
               <button type="submit" class="btn btn-primary btn-block">
                 Submit
               </button>

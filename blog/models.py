@@ -2,6 +2,7 @@ from django.db import models
 from django.utils import timezone
 from accounts.models import User
 from django.utils.text import slugify
+from ckeditor.fields import RichTextField
 
 
 class Category(models.Model):
@@ -15,7 +16,7 @@ class Category(models.Model):
 class Post(models.Model):
     title = models.CharField(max_length=500)
     slug = models.SlugField(unique=True, blank=True)
-    content = models.TextField()
+    content = RichTextField()
     published_date = models.DateTimeField(auto_now=True, blank=True)
     post_image = models.ImageField(
         null=True, default="post-2.jpg", upload_to="postImage"
