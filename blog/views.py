@@ -5,28 +5,13 @@ from django.db.models import Q
 from django.contrib.auth.decorators import login_required
 
 
-# Create your views here.
 def home(request):
     q = request.GET.get("q") if request.GET.get("q") != None else ""
     posts = Post.objects.filter(
         Q(category__name__icontains=q) | Q(title__icontains=q) | Q(content__icontains=q)
     )
     category = Category.objects.all()[0:5]
-
-    context = {
-        "posts": posts,
-        "category": category,
-    }
-    return render(request, "home.html", context)
-
-
-def home(request):
-    q = request.GET.get("q") if request.GET.get("q") != None else ""
-    posts = Post.objects.filter(
-        Q(category__name__icontains=q) | Q(title__icontains=q) | Q(content__icontains=q)
-    )
-    category = Category.objects.all()[0:5]
-    latest_post = Post.objects.all()[0:5]
+    latest_post = Post.objects.all()[0:3]
 
     context = {
         "posts": posts,

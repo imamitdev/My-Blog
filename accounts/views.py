@@ -3,7 +3,6 @@ from django.contrib.auth import login, authenticate
 from .forms import RegistrationFrom, UserProfileForm, UserForm
 from django.contrib import auth, messages
 from django.contrib.auth.decorators import login_required
-
 from .models import User, UserProfile
 from blog.models import Post, Category
 
@@ -18,10 +17,12 @@ def user_login(request):
         user = auth.authenticate(email=email, password=password)
         if user is not None:
             auth.login(request, user)
+            messages.success(request, "login successful!")
             return redirect("home")
-        else:
-            return redirect("login")
 
+        else:
+            messages.error(request, "something went wrong")
+            return redirect("login")
     return render(request, "login.html")
 
 
@@ -46,7 +47,7 @@ def user_register(request):
             profile.user_id = user.id
             profile.profile_picture = "default-user.png"
             profile.save()
-
+            messages.success(request, "Registration successful!")
             return redirect("login")
     else:
         form = RegistrationFrom()
@@ -87,6 +88,8 @@ def edit_profile(request):
         if profile_form.is_valid() and user_form.is_valid():
             profile_form.save()
             user_form.save()
+            messages.success(request, "update successful!")
+
             return redirect("profile")
     else:
         profile_form = UserProfileForm(instance=user_profile)

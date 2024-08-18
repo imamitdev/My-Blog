@@ -2,7 +2,7 @@ from django.db import models
 from django.utils import timezone
 from accounts.models import User
 from django.utils.text import slugify
-from ckeditor.fields import RichTextField
+from ckeditor.fields import RichTextField  # type: ignore
 
 
 class Category(models.Model):
@@ -21,7 +21,6 @@ class Post(models.Model):
     post_image = models.ImageField(
         null=True, default="post-2.jpg", upload_to="postImage"
     )
-
     author = models.ForeignKey(User, on_delete=models.CASCADE)
     category = models.ManyToManyField(Category)
     created_at = models.DateTimeField(auto_now_add=True)
